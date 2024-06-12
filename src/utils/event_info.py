@@ -1,2 +1,3 @@
 def get_event_info():
-    return "Event details: Date, Time, Location."
+    event_info = "Event: Tech Conference 2024\nDate: July 20, 2024\nLocation: Online"
+    return event_info

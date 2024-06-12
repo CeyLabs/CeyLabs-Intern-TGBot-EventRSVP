@@ -28,7 +28,7 @@ with open(CONFIG_PATH, 'r') as config_file:
 
 # Import utility scripts
 from src.utils.event_info import get_event_info
-from src.utils.group_invitation import invite_to_group
+from src.utils.group_invitation import invite_to_group,share_invitation_link
 from src.utils.registration import register_user
 
 async def start_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -53,7 +53,10 @@ async def handle_registration(update: Update, context: ContextTypes.DEFAULT_TYPE
             register_user(name, email, ticket_count, GROUP_CHAT_ID, load_database, save_to_database)
 
             await update.message.reply_text("Registration successful! You have been added to the event group.")
+            
             await invite_to_group(update.message.chat.id, GROUP_CHAT_ID, TOKEN)
+            await share_invitation_link(update.message.chat.id, GROUP_CHAT_ID, context)
+            
         else:
             await update.message.reply_text("Invalid registration format. Please provide name, email, and ticket count in the JSON format.")
     except json.JSONDecodeError:
